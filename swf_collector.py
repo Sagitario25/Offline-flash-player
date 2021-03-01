@@ -1,7 +1,7 @@
 import requests
 import validators
 
-def urlprecess (url):
+def urlprocess (url):
     if url [:2] == "//":
         url = "https:" + url
     return url
@@ -28,7 +28,7 @@ class SWF:
             while not self.content [self.start - 1] == divisors:
                 self.start -= 1
 
-            self.swfUrl = urlprecess (self.content [self.start : self.end])
+            self.swfUrl = urlprocess (self.content [self.start : self.end])
             if validators.url (self.swfUrl) == True:
                 return self.swfUrl
             else:
