@@ -5,6 +5,9 @@ import os
 def relativePath (relative = ""):#Relative path
 	return os.path.join (os.path.dirname (__file__), relative)
 
+def startSWF (flashPath, SWFPath):
+    subprocess.call ([flashPath, SWFPath])
+
 def main (url, gameName):
     swf = SWF.SWF ()
 
@@ -33,7 +36,7 @@ def main (url, gameName):
                         swf.getNext ()
                 print ("Done")
                 print ("Starting...")
-                subprocess.call([os.path.join (relativePath (), "flashplayer.exe"), os.path.join (relativePath (), "SWF", gameName + ".swf")])
+                startSWF (os.path.join (relativePath (), "flashplayer.exe"), os.path.join (relativePath (), "SWF", gameName + ".swf"))
                 exit ()
     
 if __name__ == "__main__":
