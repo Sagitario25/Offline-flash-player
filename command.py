@@ -1,5 +1,6 @@
 import os
 import downloader
+import main as mainpy
 
 class Interpreter:
 	def __init__ (self):
@@ -24,11 +25,9 @@ class Interpreter:
 	
 	def callCommand (self):
 		self.command = None
-		#try:
-		if True:
+		try:
 			self.command = self.commands [self.args [0]]#Asign the command
-			#try:
-			if True:
+			try:
 				self.returned = self.command (*self.args[1:])#Call the command and pass the arguments
 				if type (self.returned) == type (None):
 					pass
@@ -36,14 +35,17 @@ class Interpreter:
 					for i in self.returned: print (i)
 				else:
 					print (self.returned)
-			"""except Exception as inst:
-				print (inst)"""
-		"""except Exception as inst:
+			except Exception as inst:
+				print (inst)
+		except Exception as inst:
 			print (inst)
-			print ("Usually this is caused because you didnt import that command")"""
+			print ("Usually this is caused because you didnt import that command")
 
 	def addCommand (self, name, function):
 		self.commands [name] = function#Add comand to the list
+
+	def listCommands (self):
+		return [(i, self.commands [i]) for i in self.commands]
 
 
 def getArg (string):
@@ -87,8 +89,10 @@ def main ():
 	starter = SWFStarter (os.path.join (downloader.relativePath (), "flashplayer.exe"), os.path.join (downloader.relativePath (), "SWF"))
 	interpreter.addCommand ("start", starter.start)
 	interpreter.addCommand ("getNames", starter.getAviable)
+	interpreter.addCommand ("listCommands", interpreter.listCommands)
+	interpreter.addCommand ("play", mainpy.main)
 	while True:
-		command = interpreter.call (input ("---"))
+		interpreter.call (input ("---"))
 
 if __name__ == "__main__":
 	main ()
